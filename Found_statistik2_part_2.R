@@ -39,7 +39,7 @@ dataset$is_prohibited<-factor(dataset$is_prohibited) # преобразовыв�
 dataset$type <- factor(dataset$type)
 
 get_features <- function(dataset){
-  fit <- glm(is_prohibited~weight+length+width+type, dataset, family = "binomial") # лог регрессия
+  fit <- glm(is_prohibited~., dataset, family = "binomial") # лог регрессия
   p_vector <-anova(fit, test = "Chisq") # тест анова
   name <- rownames(p_vector) # получаем вектор с именами предикторов
   p_i<-which(((p_vector$`Pr(>Chi)`))<0.05) # получаем номера позиций значимых предикторов
@@ -51,3 +51,10 @@ get_features <- function(dataset){
 }
 
 get_features(dataset)
+
+get_features <- function(dataset){
+  tests <- glm(is_prohibited ~ ., test_data, family = 'binomial')
+  y <- anova(tests, test = 'Chisq')[5]
+  if (all(y > 0.05, na.rm = T)) return('Prediction makes no sense')
+  rownames(y)[which(y < 0.05)]
+}
