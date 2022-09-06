@@ -30,3 +30,24 @@ centered <- function(test_data, var_names){
 }
 
 centered(test_data, var_names)
+
+
+#Задача 3
+dataset <- read.csv("https://stepic.org/media/attachments/course/524/test_luggage_1.csv")
+
+dataset$is_prohibited<-factor(dataset$is_prohibited) # преобразовываем в фактор, в задаче ничего не сказано
+dataset$type <- factor(dataset$type)
+
+get_features <- function(dataset){
+  fit <- glm(is_prohibited~weight+length+width+type, dataset, family = "binomial") # лог регрессия
+  p_vector <-anova(fit, test = "Chisq") # тест анова
+  name <- rownames(p_vector) # получаем вектор с именами предикторов
+  p_i<-which(((p_vector$`Pr(>Chi)`))<0.05) # получаем номера позиций значимых предикторов
+  if (length(name[p_i])==0){ # если длина вектора с именами значимых предикторов равна 0
+    return("Prediction makes no sense") # то выводим сообщение
+  } else {
+    return(name[p_i]) # иначе выводим вектор с именами значимых предикторов
+  }
+}
+
+get_features(dataset)
