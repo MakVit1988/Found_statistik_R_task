@@ -58,3 +58,18 @@ get_features <- function(dataset){
   if (all(y > 0.05, na.rm = T)) return('Prediction makes no sense')
   rownames(y)[which(y < 0.05)]
 }
+
+# Задача 4
+test_data <- read.csv("https://stepic.org/media/attachments/course/524/test_data_passangers.csv")
+
+data_for_predict <-read.csv("https://stepic.org/media/attachments/course/524/predict_passangers.csv")
+
+most_suspicious <- function(test_data, data_for_predict){
+  log_mod <- glm(factor(is_prohibited)~., test_data, family = "binomial") # строим логичтическую модель
+  probability <- predict(log_mod, newdata = data_for_predict, type = "response") # на основании построенной модели, получаем вероятность для новых данных
+  index <- which.max(probability) # определяем индекс с максимальным значением вероятности для новых данных
+  result <- data_for_predict$passangers[index] # получаем имя пассажира с макисмальным значением вероятности для новых данных
+  return(result)
+}
+
+most_suspicious(test_data, data_for_predict)
