@@ -73,3 +73,18 @@ most_suspicious <- function(test_data, data_for_predict){
 }
 
 most_suspicious(test_data, data_for_predict)
+
+# Задача 5
+dataset <- read.csv("https://stepic.org/media/attachments/course/524/test.csv")
+
+normality_test <- function(dataset){
+  
+  # x1 <- dataset[sapply(dataset,  FUN = is.numeric)] - определяем данные для вычисления
+  # return <- apply(x1, MARGIN = 2, FUN=shapiro.test)  - получаем результаты Шапиро-тест для всех полученных данных
+  # unlist(lapply(return, function(x) x$p.value)) - преобразуем список всех p.value значений нашего теста в вектор
+  
+  result <- apply(dataset[sapply(dataset,  FUN = is.numeric)], MARGIN = 2, FUN=shapiro.test)
+  unlist(lapply(result, function(x) x$p.value)) 
+}
+
+normality_test(dataset)
