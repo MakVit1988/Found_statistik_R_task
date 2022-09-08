@@ -88,3 +88,8 @@ normality_test <- function(dataset){
 }
 
 normality_test(dataset)
+
+normality_test <- function(dataset){    
+  numeric_var <- sapply(dataset, is.numeric)  
+  sapply(dataset[numeric_var], function(x) shapiro.test(x)$p.value)    
+}
