@@ -93,3 +93,25 @@ normality_test <- function(dataset){
   numeric_var <- sapply(dataset, is.numeric)  
   sapply(dataset[numeric_var], function(x) shapiro.test(x)$p.value)    
 }
+
+# Задача 6
+test_data <- read.csv("https://stepic.org/media/attachments/course/524/s_anova_test.csv")
+test_data <- as.data.frame(list(x = c(-0.18, -1.43, 0.57, 0.52, -1.51, -0.89, 0.71, 0.28, -0.53, 1.11, 2.9, 0.61, 0.42, -0.4, -0.11, 0.15, 0.55, 0.7, -1.13, 0.28, 0.36, 0.88, 0.61, 0.05, 0.31, -1.63, 0.52, 0.12, 0.21, 0.47), y = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3)))
+test_data$y <- factor(test_data$y)
+
+smart_anova <- function(test_data){
+  norm <- aggregate(x~y, test_data, function(x) shapiro.test(x)$p.value)$x
+  gom <- c(bartlett.test(x~y, test_data)$p.value)
+  if (norm[which.min(norm)]<0.05 | gom <0.05){
+    p_valuekw <- kruskal.test(x~y, test_data)$p.value
+    kw <- c("KW" = p_valuekw)
+    return(kw)
+  } else {
+    fit <- aov(x~y, test_data)
+    p_value <- summary(fit)[[1]]$'Pr(>F)'[1]
+    anv <- c("ANOVA" = p_value)
+    return(anv)
+  }
+  
+}
+smart_anova(test_data)
