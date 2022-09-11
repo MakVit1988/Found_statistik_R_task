@@ -115,3 +115,14 @@ smart_anova <- function(test_data){
   
 }
 smart_anova(test_data)
+
+# Задача 7
+test_data <- read.csv("https://stepic.org/media/attachments/course/524/test_for_norm.csv")
+
+normality_by <- function(test){
+  p_value <- aggregate(x~y+z, test_data, function(x) shapiro.test(x)$p.value)
+  names(p_value)[names(p_value) == 'x'] <- 'p_value'
+  return(p_value)
+}
+
+normality_by(test_data)
