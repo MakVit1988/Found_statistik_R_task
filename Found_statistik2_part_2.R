@@ -159,3 +159,11 @@ normality_by <- function(test){
   names(grouped)[3] <- 'p_value'         
   return(grouped)         
 }
+
+# Задача 8
+test_data <- iris
+library(ggplot2)
+obj <- ggplot(iris, aes(x=Sepal.Length,fill=Species))+    
+  geom_density(alpha = 0.2)
+
+qplot(Sepal.Length, data = test_data, geom = "density", fill=Species, alpha=I(1/4)) 
