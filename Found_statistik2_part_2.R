@@ -167,3 +167,27 @@ obj <- ggplot(iris, aes(x=Sepal.Length,fill=Species))+
   geom_density(alpha = 0.2)
 
 qplot(Sepal.Length, data = test_data, geom = "density", fill=Species, alpha=I(1/4)) 
+
+# Пример кластаризации
+library(ggplot2)
+d <- iris[, c("Sepal.Length", "Petal.Width")]
+
+fit <- kmeans(d, 5)
+d$clusters <- factor(fit$cluster)
+
+ggplot(d, aes(Sepal.Length, Petal.Width, col = clusters))+
+  geom_point(size = 2)+
+  theme_bw() 
+
+x <- c(-3, 1, 2, 3, 5, 6, 7)
+y <- c(3, 4, 6, 8, 2, 11, 1)
+exemp <- data.frame(X = x, Y = y)
+exemp$xm <- mean(exemp$X)
+exemp$ym <- mean(exemp$Y)
+exemp$r <- (exemp$xm-exemp$X)^2 + (exemp$ym-exemp$Y)^2
+sum(exemp$r)
+
+ggplot() + 
+  geom_point(data = exemp, aes(X, Y))+
+  geom_point(data = table_mean, aes(Xm ,Ym), col="red", size = 3)
+
