@@ -1,4 +1,4 @@
-# Задачи ко второму разделу
+# Практические задания 2.8
 # Задача 1
 test_data <- read.csv("https://stepik.org/media/attachments/course/524/test_data_01.csv") # Данные для проверки
 test_data <- transform(test_data, x = factor(x), y = factor(y)) # Переводим данные в фактор
@@ -168,7 +168,8 @@ obj <- ggplot(iris, aes(x=Sepal.Length,fill=Species))+
 
 qplot(Sepal.Length, data = test_data, geom = "density", fill=Species, alpha=I(1/4)) 
 
-# Пример кластаризации
+# Задачи к 3 разделу
+# Пример кластаризации K-means
 library(ggplot2)
 d <- iris[, c("Sepal.Length", "Petal.Width")]
 
@@ -191,6 +192,7 @@ ggplot() +
   geom_point(data = exemp, aes(X, Y))+
   geom_point(data = table_mean, aes(Xm ,Ym), col="red", size = 3)
 
+# Иерархическая кластаризация
 library(ggplot2) 
 library(ggrepel) # для симпатичной подписи точек на графике
 
@@ -216,3 +218,18 @@ tr <- rtree(20, tip.label = c("B","C","D","E","F","G","H","I","J","K","L","M","N
 plot.phylo(tr) 
 #правое дерево 
 plot.phylo(tr, use.edge.length=FALSE)
+
+# Практические задания 3.6
+# Задача 1
+test_data <- read.csv("https://stepic.org/media/attachments/course/524/test_data_hclust.csv")
+
+
+smart_hclust<-  function(test_data, cluster_number){
+  dist_test_data <- dist(test_data)
+  fit <- hclust(dist_test_data, method = "complete", members = NULL)
+  cluster <- cutree(fit, cluster_number)
+  test_data$cluster <- factor(cluster)
+  return(test_data)
+}
+
+smart_hclust(test_data, 3)
