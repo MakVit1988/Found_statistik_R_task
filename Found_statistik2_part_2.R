@@ -242,7 +242,7 @@ test_data <- read.csv("https://stepic.org/media/attachments/course/524/cluster_2
 get_difference<-  function(test_data, cluster_number){
   dist_test_data <- dist(test_data)
   fit <- hclust(dist_test_data, method = "complete", members = NULL)
-  cluster <- cutree(fit, 3)
+  cluster <- cutree(fit, cluster_number)
   test_data$cluster <- factor(cluster)
   result <-c()
   for (i in 1:(length(colnames(test_data))-1)) {
