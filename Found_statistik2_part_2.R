@@ -275,3 +275,9 @@ get_pc <- function(d){
   return(test_data)
 }
 get_pc(test_data)
+
+get_pc <- function(test){    
+  fit <- prcomp(test)    
+  test<- cbind(test, fit$x[,1:2])    
+  return(test)    
+}
