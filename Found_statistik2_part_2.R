@@ -233,3 +233,24 @@ smart_hclust<-  function(test_data, cluster_number){
 }
 
 smart_hclust(test_data, 3)
+
+# Задача 2
+test_data <- read.csv("https://stepic.org/media/attachments/course/524/cluster_1.csv")
+test_data <- read.csv("https://stepic.org/media/attachments/course/524/cluster_2.csv")
+
+get_difference<-  function(test_data, cluster_number){
+  dist_test_data <- dist(test_data)
+  fit <- hclust(dist_test_data, method = "complete", members = NULL)
+  cluster <- cutree(fit, 3)
+  test_data$cluster <- factor(cluster)
+  result <-c()
+  for (i in 1:(length(colnames(test_data))-1)) {
+    res<-sapply(test_data[, i], function(x) summary(aov(test_data[,i]~cluster, test_data))[[1]]$'Pr(>F)'[1])
+    if(res[i]<0.05){
+      result<-append(result, colnames(test_data)[i], i)
+    }
+  }
+  return(result)
+  
+}
+get_difference(test_data, 3)
