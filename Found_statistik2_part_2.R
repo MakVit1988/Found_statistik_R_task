@@ -264,3 +264,14 @@ get_difference <- function(test_data, n_cluster){
                   function(x) {summary(aov(x~cluster, test_data))[[1]][1,'Pr(>F)']})    
   return(names(p_val)[p_val < 0.05])    
 }
+
+# Задача 3
+test_data <- read.csv("https://stepic.org/media/attachments/course/524/pca_test.csv")
+
+get_pc <- function(d){
+  t<-summary(prcomp(test_data, rank = 2))$x
+  test_data$PC1 <- t[,1]
+  test_data$PC2 <- t[,2]
+  return(test_data)
+}
+get_pc(test_data)
