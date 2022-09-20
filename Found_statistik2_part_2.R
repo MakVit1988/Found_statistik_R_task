@@ -294,3 +294,11 @@ get_pca2 <- function(data){
 
 result<-get_pca2(data)
 str(result)
+
+get_pca2 <- function(test_data){    
+  fit <- prcomp(test_data)    
+  cum_prop <- summary(fit)importance['Cumulative Proportion',]    
+  test_data <- cbind(test_data, fitimportance['Cumulative Proportion',])
+  test_data<- cbind(test_data,fitx[,1:min(which(cum_prop>0.9))])    
+  return(test_data)    
+}
