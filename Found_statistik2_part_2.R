@@ -281,3 +281,16 @@ get_pc <- function(test){
   test<- cbind(test, fit$x[,1:2])    
   return(test)    
 }
+
+# Задача 4
+data <- swiss
+
+get_pca2 <- function(data){
+  fit <- summary(prcomp(data)) # 
+  res<- which(fit$importance[3,] > 0.9)
+  data<-cbind(data, fit$x[,1:res[1]])
+  return(data)
+}
+
+result<-get_pca2(data)
+str(result)
