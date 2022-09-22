@@ -349,3 +349,12 @@ my_plot <- ggplot(swiss, aes(Education, Catholic, col =cluster ))+
   geom_smooth(method = lm, formula = y~x)+
   geom_point()
 my_plot
+
+
+dist_matrix <- dist(swiss)    
+fit <- hclust(dist_matrix)     
+swiss$cluster <- as.factor(cutree(fit, 2))    
+my_plot <- ggplot(swiss, aes(Education, Catholic, col = cluster)) +      
+  geom_point() +      
+  geom_smooth(method = 'lm')
+my_plot
