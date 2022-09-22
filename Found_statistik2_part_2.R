@@ -320,7 +320,6 @@ is_multicol <- function(d){
      }
    }
 is_multicol(test_data)  
-
 is_multicol <- function(d){    
   d <- abs(cor(d))     
   d[lower.tri(d)] <- 0    
@@ -332,3 +331,21 @@ is_multicol <- function(d){
     return(rownames(d)[index])      
   }      
 }
+
+# Задача 6
+
+add_cluster <- function(test_data, number_cluster){
+  test <- test_data
+  fit <- hclust(dist(swiss), method = "single")
+  test$cluster<- factor(cutree(fit, number_cluster))
+  return(test)
+}
+
+swiss<- add_cluster(swiss, 2)
+
+library(ggplot2)
+
+my_plot <- ggplot(swiss, aes(Education, Catholic, col =cluster ))+
+  geom_smooth(method = lm, formula = y~x)+
+  geom_point()
+my_plot
