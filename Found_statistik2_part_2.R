@@ -302,3 +302,21 @@ get_pca2 <- function(test_data){
   test_data<- cbind(test_data,fitx[,1:min(which(cum_prop>0.9))])    
   return(test_data)    
 }
+
+# Задача 5
+test_data <- read.csv("https://stepic.org/media/attachments/course/524/Norris_1.csv")
+
+is_multicol <- function(d){
+     corel <- cor(d)
+     diag(corel) <- 0
+     abss <- abs(corel)
+     truesi <- round(abss, digits = 2) == 1
+     rows <- rownames(which(truesi, arr.ind = T))
+     len <- length(rows)
+     if (len!=0){
+       return(rows)
+     }else{
+       return("There is no collinearity in the data")
+     }
+   }
+is_multicol(test_data)  
