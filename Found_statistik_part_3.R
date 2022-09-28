@@ -45,6 +45,35 @@ VIF <- function(test_data) {
   
   return(VIF_df) }
 
+# Задача 3
+VIF <- function(data) {
+  X = data[-1]
+  vifs = unlist(lapply(colnames(X), function(c) summary(lm(as.matrix(X[c]) ~ as.matrix(X[colnames(X) != c])))$r.squared))
+  vifs = 1/(1-vifs)
+  names(vifs) = colnames(X)
+  
+  vifs
+}
 
+smart_model <- function(data) {
+  d = data
+  
+  while(TRUE) {
+    vifs = VIF(d)
+    
+    if (max(vifs) > 10) {
+      worst_x = which.max(vifs)
+      d = d[-(worst_x + 1)]
+      
+      if (ncol(d) == 2) {
+        break;
+      }
+    } else {
+      break;
+    }
+  }
+  
+  lm(d)$coefficients
+}
 
 
