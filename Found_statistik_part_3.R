@@ -76,4 +76,57 @@ smart_model <- function(data) {
   lm(d)$coefficients
 }
 
+# Задача 4
+
+test_data <- as.data.frame(list(y = c(9.83, 8.68, 8.43, 9.78, 9.9, 9.18, 10.38, 10.37, 10.74, 10.32, 
+                                      9.6, 9.04, 9.94, 11.72, 10.04, 8.58, 9.33, 11.58, 10.64, 10.26),
+                                x = c(9258.44, 2937.4, 2296.99, 8817.83, 9935.54, 4829.49, 16094.77, 
+                                      15910.81, 23104.82, 15116.96, 7388.04, 4208.42, 10338.87, 61353.07, 
+                                      11422.53, 2650.55, 5627.92, 53710.28, 20795.77, 14278.86)))
+
+
+transform_x <- function(data) {
+  vec_neg <- seq(-2, -0.1, by = 0.1)
+  vec_pos <- seq(0.1, 2, by = 0.1)
+  new_vars <- do.call(rbind, c(lapply(vec_neg, function(i) -(data$x ^ i)),
+                               lapply(vec_pos, function(i) data$x ^ i)))
+  cor_var_zero <- cor.test( ~ y + log(data$x), data)$estimate
+  cor <- apply(new_vars, 1, function(i) cor.test( ~ y + i, data)$estimate)
+  n <- which.max(abs(c(cor, cor_var_zero)))
+  if (n <= 40) {
+    result <- new_vars[n,]
+  } else {
+    result <- log(data$x)
+  }
+  return(result)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
