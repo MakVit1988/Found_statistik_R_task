@@ -25,3 +25,26 @@ hetero_test <-  function(test_data){
   summary(fit_uait_test)$r.squared 
   
 }
+
+# Задача 2
+VIF <- function(test_data) {
+  
+  test_df<-data.frame(test_data[,-1])
+  
+  VIF_df<-numeric(0)
+  
+  for (i in 1:ncol(test_df)) {
+    
+    model<-lm(test_df[,i]~as.matrix(test_df[,-i]), data=test_df)
+    
+    VIF_test<-1/(1-summary(model)$r.squared)
+    
+    VIF_df<-c(VIF_df,VIF_test)
+    
+    names(VIF_df)[i]<-names(test_df)[i] }
+  
+  return(VIF_df) }
+
+
+
+
