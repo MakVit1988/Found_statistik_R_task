@@ -17,7 +17,7 @@ y1-y2
 
 hist(fit3$residuals)
 
-# Задачи первой части
+# Неделя 1
 # Задача 1
 hetero_test <-  function(test_data){
   fit <- lm(test_data[,1]~., data=test_data[,-1])
@@ -102,11 +102,21 @@ transform_x <- function(data) {
 }
 
 
+# Неделя 2
+# Смешанные регрессинонные модели
+install.packages('lme4')
+install.packages('mlmRev')
+install.packages('lmerTest')
 
-
-
-
-
+# Задачча 1
+# Постройте график, отображающий различие в высоте голоса (frequency)
+# для каждого предложения (scenario) в зависимости от типа социальной ситуации (attitude). 
+# Не забудьте перевести переменную scenario в фактор.
+exp_data <- read.csv("http://www.bodowinter.com/tutorial/politeness_data.csv")
+exp_data$scenario<-factor(exp_data$scenario)
+plot_1 <- ggplot(exp_data, aes(x = as.factor(scenario), y = frequency, fill = attitude))+
+  geom_boxplot(na.rm = TRUE)
+plot_1
 
 
 
