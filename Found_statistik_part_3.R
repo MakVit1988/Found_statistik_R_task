@@ -118,9 +118,11 @@ plot_1 <- ggplot(exp_data, aes(x = as.factor(scenario), y = frequency, fill = at
   geom_boxplot(na.rm = TRUE)
 plot_1
 
-
-
-
+# Задача 2
+# Визуализируйте распределение высоты голоса у испытуемых в зависимости от пола и номера испытуемого:
+plot_2 <- ggplot(exp_data, aes(x=frequency, fill=subject, alpha=0.3), na.rm = TRUE)+
+  geom_density()+
+  facet_grid(gender ~ .)
 
 
 
