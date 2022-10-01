@@ -145,10 +145,15 @@ summary(fit_1)
 fit_2 <- lmer(frequency~attitude + gender + (1+1|subject) + (1+1|scenario), data = exp_data)
 summary(fit_2)
 
-
-
-
-
+# Задача 5
+# Ваша задача — построить следующую регрессионную модель:
+# зависимая переменная — frequency,
+# фиксированный эффект — attitude,
+# фиксированный эффект — gender,
+# а также добавлен случайный intercept и slope для переменных subject и scenario. 
+# Теперь, когда в модели два фиксированных эффекта, мы можем по разному записать случайные эффекты. 
+# В этом исследовании нас интересует случайный эффект для социальной ситуации (attitude).
+fit_3 <- lmer(frequency~attitude + gender + (1+attitude|subject) + (1+attitude|scenario), data = exp_data)
 
 
 
