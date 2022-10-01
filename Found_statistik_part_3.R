@@ -133,8 +133,17 @@ plot_2 <- ggplot(exp_data, aes(x=frequency, fill=subject, alpha=0.3), na.rm = TR
 fit_1 <- lmer(frequency~attitude + (1+1|subject) + (1+1|scenario), data = exp_data)
 summary(fit_1)
 
-
-
+# Задача 4
+# Ваша задача — построить следующую регрессионную модель:
+# зависимая переменная — frequency,
+# фиксированный эффект — attitude,
+# фиксированный эффект — gender,
+# а также добавлен случайный intercept для переменных subject и scenario.
+# * вы уже, наверное, догадались, что не существует четкой границы между фиксированными и 
+# случайными эффектами. В каком-то исследовании пол может выступать как случайный эффект, 
+# однако в этом исследовании авторы включили его в список основных эффектов. 
+fit_2 <- lmer(frequency~attitude + gender + (1+1|subject) + (1+1|scenario), data = exp_data)
+summary(fit_2)
 
 
 
