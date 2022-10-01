@@ -124,11 +124,14 @@ plot_2 <- ggplot(exp_data, aes(x=frequency, fill=subject, alpha=0.3), na.rm = TR
   geom_density()+
   facet_grid(gender ~ .)
 
-
-
-
-
-
+# Задача 3 
+# Итак, ваша задача — построить следующую регрессионную модель: 
+# зависимая переменная — frequency, 
+# фиксированный эффект — attitude,
+# а также добавлен случайный intercept для переменных subject и scenario.
+# Сохраните модель в переменную fit_1. Данные записаны в переменной exp_data.
+fit_1 <- lmer(frequency~attitude + (1+1|subject) + (1+1|scenario), data = exp_data)
+summary(fit_1)
 
 
 
