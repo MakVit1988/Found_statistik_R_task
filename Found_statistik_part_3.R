@@ -162,6 +162,22 @@ summary(fit_2)
 fit_3 <- lmer(frequency~attitude + gender + (1+attitude|subject) + (1+attitude|scenario), data = exp_data)
 
 
+# Неделя 3
+# Выразите нижнюю границу базового доверительного интервала через перцентильный доверительный 
+# интервал и выборочное среднее.
+X_bar = 10
+x_barstar = rnorm(700, x_bar, 1)
+high = quantile(x_barstar, 0.95)
+low = quantile(x_barstar, 0.05)
+m = mean(x_barstar)
+delta = (h-l)/2
 
-
-
+ggplot()+
+  geom_histogram(aes(x_barstar), binwidth = 0.1)+
+  geom_vline(xintercept = h, col ="red") +
+  geom_vline(xintercept = l, col ="red") +
+  geom_histogram(aes(x_bar-x_barstar), binwidth = 0.1)+
+  geom_vline(xintercept =-1* (low +(high - low)/2 - X_bar) - (high - low)/2 + X_bar, col ="blue") +
+  theme_bw()
+# Правтичексие задания
+# Задача 1
